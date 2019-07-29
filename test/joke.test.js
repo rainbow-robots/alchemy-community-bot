@@ -31,4 +31,12 @@ describe('jokes tests', () => {
         });
       });
   });
+
+  it('can return a random tweet', () => {
+    return request(app)
+      .get('/api/v1/jokes/random')
+      .then(res => {
+        expect(res.body).toHaveProperty('q');
+      });
+  });
 });
