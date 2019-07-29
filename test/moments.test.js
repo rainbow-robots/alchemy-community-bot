@@ -1,0 +1,26 @@
+const { getMoments, getAgent } = require('./data-helper');
+
+const request = require('supertest');
+const app = require('../lib/app');
+
+describe('MOMENTOUS OCCASION', () => {
+  it('can make beautiful moments', () => {
+    return getAgent()
+      .post('/api/v1/moments')
+      .send({
+        handle: 'arrrg',
+        text: 'piiirate'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          handle: 'arrrg',
+          text: 'piiirate',
+          tweeted: false,
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+          __v: 0
+        });
+      });
+  });
+});
