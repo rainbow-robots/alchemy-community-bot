@@ -39,4 +39,14 @@ describe('jokes tests', () => {
         expect(res.body).toHaveProperty('q');
       });
   });
+
+  it('can delete a joke', () => {
+    const joke = getJokes()[0];
+    
+    return getAgent()
+      .delete(`/api/v1/jokes/${joke._id}`)
+      .then(res => {
+        expect(res.body).toHaveProperty('q');
+      });
+  });
 });
