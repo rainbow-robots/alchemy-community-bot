@@ -18,16 +18,16 @@ beforeEach(() => {
 let agent = request.agent(app);
 let seededUsers = null;
 beforeEach(async() => {
-  const { users } = await seedData();
-  seededUsers = prepare(users);
+  const { createdUsers } = await seedData();
+  seededUsers = prepare(createdUsers);
 
   return await agent
     .post('/api/v1/auth/signin')
-    .send({ username: users[0].username, passwrod: 'password' });
+    .send({ username: createdUsers[0].username, passwrod: 'password' });
 });
 
 afterAll(() => {
-  mongoose.connection.close();
+  return mongoose.connection.close();
 });
 
 module.exports = {
