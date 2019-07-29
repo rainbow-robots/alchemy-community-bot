@@ -1,11 +1,11 @@
-const { getJokes } = require('./data-helper');
+const { getJokes, getAgent } = require('./data-helper');
 
 const request = require('supertest');
 const app = require('../lib/app');
 
 describe('jokes tests', () => {
   it('can create a joke', () => {
-    return request(app)
+    return getAgent()
       .post('/api/v1/jokes')
       .send({ 
         q: 'this is really funny', 
@@ -21,6 +21,14 @@ describe('jokes tests', () => {
   });
 
   it('can get joookes', () => {
-    
-  })
+    const jokes = getJokes();
+
+    return getAgent()
+      .get('/api/v1/jokes')
+      .then(res => {
+        jokes.forEach(joke => {
+          expect(res.body).toContainEqual(joke);
+        });
+      });
+  });
 });
