@@ -20,7 +20,7 @@ describe('jokes tests', () => {
       });
   });
 
-  it('can get joookes', () => {
+  it('can get all jokes', () => {
     const jokes = getJokes();
 
     return getAgent()

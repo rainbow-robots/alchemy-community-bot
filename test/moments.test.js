@@ -23,4 +23,16 @@ describe('MOMENTOUS OCCASION', () => {
         });
       });
   });
+
+  it('can get all moments', () => {
+    const moments = getMoments();
+    
+    return getAgent()
+      .get('/api/v1/moments')
+      .then(res => {
+        moments.forEach(moment => {
+          expect(res.body).toContainEqual(moment);
+        });
+      });
+  });
 });
