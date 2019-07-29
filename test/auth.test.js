@@ -34,4 +34,15 @@ describe('auth routes', () => {
         });
       });
   });
+
+  it('can verify a user with token', () => {
+    return getAgent() 
+      .get('/api/v1/auth/verify')
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          username: expect.any(String),
+        });
+      });
+  });
 });
