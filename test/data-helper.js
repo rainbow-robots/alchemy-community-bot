@@ -18,11 +18,13 @@ beforeEach(() => {
 let agent = request.agent(app);
 let seededUsers = null;
 let seededJokes = null;
+let seededMoments = null;
 
 beforeEach(async() => {
-  const { createdUsers, createdJokes } = await seedData();
+  const { createdUsers, createdJokes, createdMoments } = await seedData();
   seededUsers = prepare(createdUsers);
   seededJokes = prepare(createdJokes);
+  seededMoments = prepare(createdMoments);
 
   return await agent
     .post('/api/v1/auth/signin')
@@ -36,5 +38,6 @@ afterAll(() => {
 module.exports = {
   getAgent: () => agent,
   getUsers: () => seededUsers,
-  getJokes: () => seededJokes
+  getJokes: () => seededJokes,
+  getMoments: () => seededMoments
 };
