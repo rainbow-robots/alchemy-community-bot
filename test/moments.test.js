@@ -36,6 +36,16 @@ describe('MOMENTOUS OCCASION', () => {
       });
   });
 
+  it('it can update the tweeted', () => {
+    const moment = getMoments()[0];
+    return getAgent()
+      .patch(`/api/v1/moments/${moment._id}`)
+      .send({ tweeted: true })
+      .then(res => {
+        expect(res.body.tweeted).toEqual(true);
+      });
+  });
+
   it('it can delete a moment', () => {
     const moment = getMoments()[0];
 
