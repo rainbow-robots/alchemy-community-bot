@@ -1,6 +1,6 @@
 const { getMoments, getAgent } = require('./data-helper');
-// const request = require('supertest');
-// const app = require('../lib/app');
+const request = require('supertest');
+const app = require('../lib/app');
 
 describe('MOMENTOUS OCCASION', () => {
   it('can make beautiful moments', () => {
@@ -31,6 +31,14 @@ describe('MOMENTOUS OCCASION', () => {
         moments.forEach(moment => {
           expect(res.body).toContainEqual(moment);
         });
+      });
+  });
+
+  it('can get oldest moment and update tweeted: true', () => {
+    return request(app)
+      .get('/api/v1/moments/throwback')
+      .then(res => {
+        expect(res.body.tweeted).toBeTruthy();
       });
   });
 
