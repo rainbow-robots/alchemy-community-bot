@@ -1,5 +1,4 @@
 const { getJokes, getAgent } = require('./data-helper');
-
 const request = require('supertest');
 const app = require('../lib/app');
 
@@ -22,7 +21,6 @@ describe('jokes tests', () => {
 
   it('can get all jokes', () => {
     const jokes = getJokes();
-
     return getAgent()
       .get('/api/v1/jokes')
       .then(res => {

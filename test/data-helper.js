@@ -19,7 +19,6 @@ let agent = request.agent(app);
 let seededUsers = null;
 let seededJokes = null;
 let seededMoments = null;
-
 beforeEach(async() => {
   const { createdUsers, createdJokes, createdMoments } = await seedData();
   seededUsers = prepare(createdUsers);
