@@ -42,8 +42,11 @@ function onAuthenticated(err, res) {
       return request
         .post('https://alchemypdxbot.herokuapp.com/api/v1/moments')
         .send({
-          handle: `@${fromHandle}`,
-          text: newText
+          text: newText,
+          handle: `@${fromHandle}`
+        })
+        .then(() => {
+          console.log('moment is saved?');
         });
     } else if(hashtags.includes('#help')) {
       Tweet
