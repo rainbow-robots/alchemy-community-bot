@@ -1,7 +1,6 @@
 require('dotenv').config();
 const Twit = require('twit');
 const request = require('superagent');
-const Joke = require('./lib/models/Joke');
 const keys = require('./config');
 const Tweet = new Twit(keys);
 Tweet
