@@ -4,7 +4,7 @@ const app = require('../lib/app');
 
 describe('MOMENTOUS OCCASION', () => {
   it('can make beautiful moments', () => {
-    return getAgent()
+    return request(app)
       .post('/api/v1/moments')
       .send({
         handle: 'arrrg',

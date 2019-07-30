@@ -33,13 +33,18 @@ function onAuthenticated(err, res) {
         .get('https://alchemypdxbot.herokuapp.com/api/v1/jokes/random')
         .then(joke => {
           Tweet
+            // eslint-disable-next-line no-unused-vars
             .post('statuses/update', { status: `.@${fromHandle}, ${joke.body.q} ${joke.body.a}` }, function(err, data, response) {
               console.log('tweeted out a joke');
             });
         });
     } else if(hashtags.includes('#moment')) {
-      //function to grab event.text and event.user.screen_name
-      //then use post route to create and save it
+      return request
+        .post('https://alchemypdxbot.herokuapp.com/api/v1/moments')
+        .send({
+          handle: `@${fromHandle}`,
+          text: newText
+        });
     } else if(hashtags.includes('#help')) {
       Tweet
         // eslint-disable-next-line no-unused-vars
