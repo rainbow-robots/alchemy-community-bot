@@ -1,5 +1,6 @@
 require('dotenv').config();
 const Twit = require('twit');
+const request = require('superagent');
 const Joke = require('./lib/models/Joke');
 const keys = require('./config');
 const Tweet = new Twit(keys);
@@ -29,14 +30,14 @@ function onAuthenticated(err, res) {
     });
 
     if(hashtags.includes('#joke')) {
-      // Joke
-      //   .get('https://alchemypdxbot.herokuapp.com/api/v1/jokes/random')
-      //   .then(joke => {
-      //     Tweet
-      //       .post('status/update', { status: `Yo @${fromHandle}, here is your joke: ${joke}` }, function(err, data, response) {
-      //         console.log('tweeted out a joke');
-      //       });
-      //   });
+      return request
+        .get('https://alchemypdxbot.herokuapp.com/api/v1/jokes/random')
+        .then(joke => {
+          Tweet
+            .post('statuses/update', { status: `.@${fromHandle}, ${joke.body.q} ${joke.body.a}` }, function(err, data, response) {
+              console.log('tweeted out a joke');
+            });
+        });
     } else if(hashtags.includes('#moment')) {
       //function to grab event.text and event.user.screen_name
       //then use post route to create and save it
