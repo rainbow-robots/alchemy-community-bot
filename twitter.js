@@ -14,12 +14,37 @@ function onAuthenticated(err, res) {
     throw err;
   }
 
-  Tweet
-    // eslint-disable-next-line no-unused-vars
-    .post('statuses/update', { status: 'Hey @lasermistress, this is a test' }, function(err, data, response) {
-      // eslint-disable-next-line no-console
-      console.log('tweet worked?');
+  const stream = Tweet.stream('statuses/filter', { track: 'AlchemyPDXBot' });
+  stream.on('tweet', tweetEvent);
+  stream.on('error', onError);
+
+  function tweetEvent(event) {
+    const fromHandle = event.user.screen_name;
+    const tweetText = event.text.toLowerCase();
+    let newText = tweetText;
+    newText = newText.replace('@alchemypdxbot', '').replace('alchemypdxbot', '');
+    const hashtags = event.entities.hashtags.map(object => {
+      return `#${object.text}`;
     });
+
+    if(hashtags.includes('#joke')) {
+      //function to grab joke from database and tweet it out with Tweet.post
+      //use get random route
+    } else if(hashtags.includes('#moment')) {
+      //function to grab event.text and event.user.screen_name
+      //then use post route to create and save it
+    } else if(hashtags.includes('#help')) {
+      Tweet
+        // eslint-disable-next-line no-unused-vars
+        .post('statuses/update', { status: `Hey alchemers, @${fromHandle} needs help with: ${newText}` }, function(err, data, response) {
+          console.log('retweeted help question');
+        });
+    }
+  }
+
+  function onError(error) {
+    throw error;
+  }
 }
 
 

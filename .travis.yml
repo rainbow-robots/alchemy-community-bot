@@ -1,4 +1,4 @@
 language: node_js
 node_js: node
 services: mongodb
-env: MONGODB_URI=mongodb://localhost:27017/travis, APP_SECRET=SECRET
+env: MONGODB_URI=mongodb://localhost:27017/travis, APP_SECRET=SECRET, CONSUMER_KEY=hjhgjhghj, CONSUMER_SECRET=kjkjhkjhjk, ACCESS_TOKEN=kkhjkhkjhjkhk, ACCESS_TOKEN_SECRET=hkjjkhjkhjk
