@@ -29,7 +29,17 @@ function onAuthenticated(err, res) {
     });
 
     if(hashtags.includes('#joke')) {
-      //where stuff will live
+      Joke
+        .get('https://alchemypdxbot.herokuapp.com/api/v1/jokes/random')
+        .then(joke => {
+          return joke;
+        })
+        .then(joke => {
+          Tweet
+            .post('status/update', { status: `Yo @${fromHandle}, here is your joke: ${joke}` }, function(err, data, response) {
+              console.log('tweeted out a joke');
+            });
+        });
     } else if(hashtags.includes('#moment')) {
       //function to grab event.text and event.user.screen_name
       //then use post route to create and save it
