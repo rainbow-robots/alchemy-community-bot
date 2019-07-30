@@ -1,5 +1,6 @@
 require('dotenv').config();
 const Twit = require('twit');
+const Joke = require('./lib/models/Joke');
 const keys = require('./config');
 const Tweet = new Twit(keys);
 Tweet
@@ -28,8 +29,7 @@ function onAuthenticated(err, res) {
     });
 
     if(hashtags.includes('#joke')) {
-      //function to grab joke from database and tweet it out with Tweet.post
-      //use get random route
+      //where stuff will live
     } else if(hashtags.includes('#moment')) {
       //function to grab event.text and event.user.screen_name
       //then use post route to create and save it
