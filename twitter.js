@@ -41,7 +41,7 @@ function onAuthenticated(err, res) {
               console.log('tweeted out a joke');
             });
         });
-    } else if(hashtags.includes('#moment')) {
+    } else if(hashtags.includes('#alchemymoment')) {
       if(!swearjar.profane(newText)) {
         return request
           .post('https://alchemypdxbot.herokuapp.com/api/v1/moments')
@@ -91,7 +91,7 @@ function momentThrowBack() {
 //This is what will allow us to control the frequency of the throwback posts, it is currently set at two
 //minutes and it is commented out
 // setInterval(momentThrowBack, 120000);
-momentThrowBack();
+// momentThrowBack();
 
 
 
