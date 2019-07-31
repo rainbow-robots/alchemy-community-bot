@@ -62,4 +62,17 @@ function onAuthenticated(err, res) {
   }
 }
 
+function momentThrowBack() {
+  return request
+    .get('https://alchemypdxbot.herokuapp.com/api/v1/moments/throwback')
+    .then(res => {
+      Tweet
+        .post('statuses/update', { status: `Remember when ${res.body.handle} had a moment: ${res.body.text}` }, function(err, data, response) {
+          console.log('posted a throw back');
+        });
+    });
+}
+setInterval(momentThrowBack, 120000);
+
+
 
