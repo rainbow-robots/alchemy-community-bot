@@ -27,9 +27,8 @@ function onAuthenticated(err, res) {
     const hashtags = event.entities.hashtags.map(object => {
       return `#${object.text}`;
     });
-    const media = event.entities.media.map(object => {
-      return object.id_str;
-    });
+    const media = event.entities.media[0].id_str;
+    console.log(media);
     newText = newText.replace('@alchemypdxbot', '').replace('alchemypdxbot', '');
 
     if(hashtags.includes('#joke')) {
@@ -49,8 +48,7 @@ function onAuthenticated(err, res) {
           .post('https://alchemypdxbot.herokuapp.com/api/v1/moments')
           .send({
             text: newText,
-            handle: `@${fromHandle}`,
-            img_id: media
+            handle: `@${fromHandle}`
           })
           .then(() => {
             console.log('moment is saved in the database');
@@ -76,6 +74,7 @@ function momentThrowBack() {
   return request
     .get('https://alchemypdxbot.herokuapp.com/api/v1/moments/throwback')
     .then(res => {
+      console.log(res.body.text);
       Tweet
         // eslint-disable-next-line no-unused-vars
         .post('statuses/update', { status: `Remember when ${res.body.handle} had this moment: ${res.body.text}` }, function(err, data, response) {
@@ -86,6 +85,7 @@ function momentThrowBack() {
 //This is what will allow us to control the frequency of the throwback posts, it is currently set at two
 //minutes and it is commented out
 // setInterval(momentThrowBack, 120000);
+momentThrowBack();
 
 
 
