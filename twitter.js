@@ -27,9 +27,10 @@ function onAuthenticated(err, res) {
     const hashtags = event.entities.hashtags.map(object => {
       return `#${object.text}`;
     });
+    const regexForUrl = /(https?:\/\/)(\s)?(www\.)?(\s?)(\w+\.)*([\w\-\s]+\/)*([\w-]+)\/?/;
     // const media = event.entities.media[0].id_str;
     // console.log(media);
-    newText = newText.replace('@alchemypdxbot', '').replace('alchemypdxbot', '');
+    newText = newText.replace('@alchemypdxbot', '').replace('alchemypdxbot', '').replace(regexForUrl, '');
 
     if(hashtags.includes('#joke')) {
       return request
