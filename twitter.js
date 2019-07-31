@@ -24,10 +24,13 @@ function onAuthenticated(err, res) {
     const fromHandle = event.user.screen_name;
     const tweetText = event.text.toLowerCase();
     let newText = tweetText;
-    newText = newText.replace('@alchemypdxbot', '').replace('alchemypdxbot', '');
     const hashtags = event.entities.hashtags.map(object => {
       return `#${object.text}`;
     });
+    const media = event.entities.media.map(object => {
+      return object.id_str;
+    });
+    newText = newText.replace('@alchemypdxbot', '').replace('alchemypdxbot', '');
 
     if(hashtags.includes('#joke')) {
       return request
@@ -46,7 +49,8 @@ function onAuthenticated(err, res) {
           .post('https://alchemypdxbot.herokuapp.com/api/v1/moments')
           .send({
             text: newText,
-            handle: `@${fromHandle}`
+            handle: `@${fromHandle}`,
+            img_id: media
           })
           .then(() => {
             console.log('moment is saved in the database');
@@ -73,6 +77,7 @@ function momentThrowBack() {
     .get('https://alchemypdxbot.herokuapp.com/api/v1/moments/throwback')
     .then(res => {
       Tweet
+        // eslint-disable-next-line no-unused-vars
         .post('statuses/update', { status: `Remember when ${res.body.handle} had this moment: ${res.body.text}` }, function(err, data, response) {
           console.log('posted a throw back');
         });
