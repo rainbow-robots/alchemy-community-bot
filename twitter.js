@@ -25,7 +25,7 @@ function onAuthenticated(err, res) {
     const tweetText = event.text.toLowerCase();
     const tweetId = event.id_str;
     const hashtags = event.entities.hashtags.map(object => {
-      return `#${object.text}`;
+      return `#${object.text.toLowerCase()}`;
     });
     const regexForUrl = /(https?:\/\/)(\s)?(www\.)?(\s?)(\w+\.)*([\w\-\s]+\/)*([\w-]+)\/?/;
     let newText = tweetText;
@@ -59,10 +59,10 @@ function onAuthenticated(err, res) {
         Tweet
           // eslint-disable-next-line no-unused-vars
           .post('statuses/update', { status: `Hey alchemers, @${fromHandle} needs help: ${newText}` }, function(err, data, response) {
-            console.log('retweeted help question');
-            if(err) {
-              console.log(err);
+            if(!err) {
+              console.log('retweeted help question');
             }
+            console.log(err);
           });
       }
     }
@@ -77,13 +77,14 @@ function momentThrowBack() {
   return request
     .get('https://alchemypdxbot.herokuapp.com/api/v1/moments/throwback')
     .then(res => {
+      console.log(res.body.twitter_id);
       Tweet
         // eslint-disable-next-line no-unused-vars
         .post('statuses/retweet/:id', { id: res.body.twitter_id }, function(err, data, response) {
-          console.log('posted a throw back');
-          if(err) {
-            console.log(err);
+          if(!err) {
+            console.log('posted a throw back');
           }
+          console.log(err);
         });
     });
 }
