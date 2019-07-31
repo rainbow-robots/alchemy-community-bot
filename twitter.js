@@ -79,7 +79,7 @@ function momentThrowBack() {
     .then(res => {
       Tweet
         // eslint-disable-next-line no-unused-vars
-        .post('statuses/retweet/:id', { id: res.body.twitter_id }, function(err, data, response) {
+        .post('statuses/retweet/:id', { status: 'Alchemy throwback!', id: res.body.twitter_id }, function(err, data, response) {
           console.log('posted a throw back');
           if(err) {
             console.log(err);
@@ -90,7 +90,7 @@ function momentThrowBack() {
 //This is what will allow us to control the frequency of the throwback posts, it is currently set at two
 //minutes and it is commented out
 // setInterval(momentThrowBack, 120000);
-// momentThrowBack();
+momentThrowBack();
 
 
 
