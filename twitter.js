@@ -27,8 +27,8 @@ function onAuthenticated(err, res) {
     const hashtags = event.entities.hashtags.map(object => {
       return `#${object.text}`;
     });
-    const media = event.entities.media[0].id_str;
-    console.log(media);
+    // const media = event.entities.media[0].id_str;
+    // console.log(media);
     newText = newText.replace('@alchemypdxbot', '').replace('alchemypdxbot', '');
 
     if(hashtags.includes('#joke')) {
