@@ -24,12 +24,11 @@ function onAuthenticated(err, res) {
     const fromHandle = event.user.screen_name;
     const tweetText = event.text.toLowerCase();
     let newText = tweetText;
+    const regexForUrl = /(https?:\/\/)(\s)?(www\.)?(\s?)(\w+\.)*([\w\-\s]+\/)*([\w-]+)\/?/;
     const hashtags = event.entities.hashtags.map(object => {
       return `#${object.text}`;
     });
-    const regexForUrl = /(https?:\/\/)(\s)?(www\.)?(\s?)(\w+\.)*([\w\-\s]+\/)*([\w-]+)\/?/;
-    // const media = event.entities.media[0].id_str;
-    // console.log(media);
+    const media = event.entities.media[0].id_str;
     newText = newText.replace('@alchemypdxbot', '').replace('alchemypdxbot', '').replace(regexForUrl, '');
 
     if(hashtags.includes('#joke')) {
@@ -43,13 +42,13 @@ function onAuthenticated(err, res) {
             });
         });
     } else if(hashtags.includes('#moment')) {
-      //also adding the direct messaging here to let them know we got their moment
       if(!swearjar.profane(newText)) {
         return request
           .post('https://alchemypdxbot.herokuapp.com/api/v1/moments')
           .send({
             text: newText,
-            handle: `@${fromHandle}`
+            handle: `@${fromHandle}`,
+            img_id: media
           })
           .then(() => {
             console.log('moment is saved in the database');
@@ -86,7 +85,7 @@ function momentThrowBack() {
 //This is what will allow us to control the frequency of the throwback posts, it is currently set at two
 //minutes and it is commented out
 // setInterval(momentThrowBack, 120000);
-momentThrowBack();
+// momentThrowBack();
 
 
 
