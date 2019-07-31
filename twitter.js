@@ -1,5 +1,6 @@
 require('dotenv').config();
 const Twit = require('twit');
+const request = require('superagent');
 const keys = require('./config');
 const Tweet = new Twit(keys);
 Tweet
@@ -14,12 +15,66 @@ function onAuthenticated(err, res) {
     throw err;
   }
 
-  Tweet
-    // eslint-disable-next-line no-unused-vars
-    .post('statuses/update', { status: 'Hey @lasermistress, this is a test' }, function(err, data, response) {
-      // eslint-disable-next-line no-console
-      console.log('tweet worked?');
+  const stream = Tweet.stream('statuses/filter', { track: 'AlchemyPDXBot' });
+  stream.on('tweet', tweetEvent);
+  stream.on('error', onError);
+
+  function tweetEvent(event) {
+    const fromHandle = event.user.screen_name;
+    const tweetText = event.text.toLowerCase();
+    let newText = tweetText;
+    newText = newText.replace('@alchemypdxbot', '').replace('alchemypdxbot', '');
+    const hashtags = event.entities.hashtags.map(object => {
+      return `#${object.text}`;
+    });
+
+    if(hashtags.includes('#joke')) {
+      return request
+        .get('https://alchemypdxbot.herokuapp.com/api/v1/jokes/random')
+        .then(joke => {
+          Tweet
+            // eslint-disable-next-line no-unused-vars
+            .post('statuses/update', { status: `.@${fromHandle}, ${joke.body.q} ${joke.body.a}` }, function(err, data, response) {
+              console.log('tweeted out a joke');
+            });
+        });
+    } else if(hashtags.includes('#moment')) {
+      return request
+        .post('https://alchemypdxbot.herokuapp.com/api/v1/moments')
+        .send({
+          text: newText,
+          handle: `@${fromHandle}`
+        })
+        .then(() => {
+          console.log('moment is saved?');
+        });
+    } else if(hashtags.includes('#help')) {
+      Tweet
+        // eslint-disable-next-line no-unused-vars
+        .post('statuses/update', { status: `Hey alchemers, @${fromHandle} needs help with: ${newText}` }, function(err, data, response) {
+          console.log('retweeted help question');
+        });
+    }
+  }
+
+  function onError(error) {
+    throw error;
+  }
+}
+
+function momentThrowBack() {
+  return request
+    .get('https://alchemypdxbot.herokuapp.com/api/v1/moments/throwback')
+    .then(res => {
+      Tweet
+        .post('statuses/update', { status: `Remember when ${res.body.handle} had a moment: ${res.body.text}` }, function(err, data, response) {
+          console.log('posted a throw back');
+        });
     });
 }
+//This is what will allow us to control the frequency of the throwback posts, it is currently set at two
+//minutes and it is commented out
+// setInterval(momentThrowBack, 120000);
+
 
 
