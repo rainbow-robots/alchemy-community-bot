@@ -1,6 +1,7 @@
 require('dotenv').config();
 const Twit = require('twit');
 const request = require('superagent');
+const swearjar = require('swearjar');
 const keys = require('./config');
 const Tweet = new Twit(keys);
 Tweet
@@ -39,15 +40,18 @@ function onAuthenticated(err, res) {
             });
         });
     } else if(hashtags.includes('#moment')) {
-      return request
-        .post('https://alchemypdxbot.herokuapp.com/api/v1/moments')
-        .send({
-          text: newText,
-          handle: `@${fromHandle}`
-        })
-        .then(() => {
-          console.log('moment is saved?');
-        });
+      //also adding the direct messaging here to let them know we got their moment
+      if(!swearjar.profane(newText)) {
+        return request
+          .post('https://alchemypdxbot.herokuapp.com/api/v1/moments')
+          .send({
+            text: newText,
+            handle: `@${fromHandle}`
+          })
+          .then(() => {
+            console.log('moment is saved in the database');
+          });
+      }
     } else if(hashtags.includes('#help')) {
       Tweet
         // eslint-disable-next-line no-unused-vars
@@ -67,7 +71,7 @@ function momentThrowBack() {
     .get('https://alchemypdxbot.herokuapp.com/api/v1/moments/throwback')
     .then(res => {
       Tweet
-        .post('statuses/update', { status: `Remember when ${res.body.handle} had a moment: ${res.body.text}` }, function(err, data, response) {
+        .post('statuses/update', { status: `Remember when ${res.body.handle} had this moment: ${res.body.text}` }, function(err, data, response) {
           console.log('posted a throw back');
         });
     });
