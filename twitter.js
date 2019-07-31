@@ -53,11 +53,13 @@ function onAuthenticated(err, res) {
           });
       }
     } else if(hashtags.includes('#help')) {
-      Tweet
-        // eslint-disable-next-line no-unused-vars
-        .post('statuses/update', { status: `Hey alchemers, @${fromHandle} needs help with: ${newText}` }, function(err, data, response) {
-          console.log('retweeted help question');
-        });
+      if(!swearjar.profane(newText)) {
+        Tweet
+          // eslint-disable-next-line no-unused-vars
+          .post('statuses/update', { status: `Hey alchemers, @${fromHandle} needs help with: ${newText}` }, function(err, data, response) {
+            console.log('retweeted help question');
+          });
+      }
     }
   }
 
