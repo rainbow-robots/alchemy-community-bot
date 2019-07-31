@@ -77,7 +77,7 @@ function momentThrowBack() {
       console.log(res.body.text);
       Tweet
         // eslint-disable-next-line no-unused-vars
-        .post('statuses/update', { status: `Remember when ${res.body.handle} had this moment: ${res.body.text}`, media_ids: res.body.img_id }, function(err, data, response) {
+        .post('statuses/update', { status: `Remember when ${res.body.handle} had this moment: ${res.body.text}`, media_ids: [res.body.img_id] }, function(err, data, response) {
           console.log('posted a throw back');
         });
     });
