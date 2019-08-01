@@ -58,8 +58,8 @@ function onAuthenticated(err, res) {
                 if(!err) {
                   console.log('sent a DM thanking user for their #AlchemyMoment');
                 }
-                console.log(err);
               });
+            console.log(err);
           });
       }
     } else if(hashtags.includes('#help')) {
