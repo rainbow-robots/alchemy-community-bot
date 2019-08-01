@@ -43,7 +43,7 @@ function onAuthenticated(err, res) {
               }
             });
         });
-    } else if(hashtags.includes('#alchemymoment')) {
+    } else if(hashtags.includes('#alchemymoment') && !/^rt/.test(newText)) {
       if(!swearjar.profane(newText)) {
         return request
           .post('https://alchemypdxbot.herokuapp.com/api/v1/moments')
