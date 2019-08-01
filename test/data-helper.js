@@ -11,10 +11,6 @@ beforeAll(() => {
   connect();
 });
 
-beforeEach(() => {
-  return mongoose.connection.dropDatabase();
-});
-
 let agent = request.agent(app);
 let seededUsers = null;
 let seededJokes = null;
