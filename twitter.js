@@ -54,12 +54,12 @@ function onAuthenticated(err, res) {
             console.log('#AlchemyMoment is saved in the database');
             Tweet 
               // eslint-disable-next-line no-unused-vars
-              .post('direct_messages/events/new', { event: { type: 'message_create', message_create: { target: { recipient_id: userId }, message_data: { text: `Hey @${fromHandle} thanks for your #AlchemyMoment, I have saved it in the databse and will retweet it as a throwback!` } } } }, function(err, data, response) {
+              .post('direct_messages/events/new', { event: { type: 'message_create', message_create: { target: { recipient_id: userId }, message_data: { text: `Hey @${fromHandle} thanks for your #AlchemyMoment, I have saved it in my collection and will retweet it as a throwback!` } } } }, function(err, data, response) {
                 if(!err) {
                   console.log('sent a DM thanking user for their #AlchemyMoment');
                 }
+                console.log(err);
               });
-            console.log(err);
           });
       }
     } else if(hashtags.includes('#help')) {
