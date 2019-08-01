@@ -24,7 +24,7 @@ function onAuthenticated(err, res) {
     const fromHandle = event.user.screen_name;
     const tweetText = event.text.toLowerCase();
     const tweetId = event.id_str;
-    const userScreenName = event.user.screen_name;
+    const userId = event.user.id_str;
     const hashtags = event.entities.hashtags.map(object => {
       return `#${object.text.toLowerCase()}`;
     });
@@ -54,7 +54,7 @@ function onAuthenticated(err, res) {
           .then(() => {
             console.log('moment is saved in the database');
             Tweet 
-              .post('direct_messages/new', { userScreenName, text: `Thanks @${fromHandle}, we now have your #AlchemyMoment saved in our database and will be retweeted as a throwback!` }, function(err, data, response) {
+              .post('direct_messages/events/new', { event: { type: 'message_create', message_create: { target: { recipient_id: userId }, message_data: { text: 'Hello World!' } } } }, function(err, data, response) {
                 if(!err) {
                   console.log('sent a DM thanking user for #AlchemyMoment');
                 }
