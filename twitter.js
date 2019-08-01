@@ -101,10 +101,9 @@ function momentThrowBack() {
         });
     });
 }
-//This is what will allow us to control the frequency of the throwback posts, it is currently set at two
-//minutes and it is commented out
-// setInterval(momentThrowBack, 120000);
-// momentThrowBack();
+
+setInterval(momentThrowBack, 82800000);
+
 
 
 
