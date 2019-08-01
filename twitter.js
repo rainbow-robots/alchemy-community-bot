@@ -1,9 +1,7 @@
-require('dotenv').config();
-const Twit = require('twit');
 const request = require('superagent');
 const swearjar = require('swearjar');
-const keys = require('./config');
-const Tweet = new Twit(keys);
+const Tweet = require('./lib/utils/twitInfo');
+
 Tweet
   .get('account/verify_credentials', {
     include_entities: false,
