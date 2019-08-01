@@ -36,7 +36,11 @@ function onAuthenticated(err, res) {
           Tweet
             // eslint-disable-next-line no-unused-vars
             .post('statuses/update', { status: `.@${fromHandle}, ${joke.body.q} ${joke.body.a}` }, function(err, data, response) {
-              console.log('tweeted out a joke');
+              if(!err) {
+                console.log('tweeted out a joke');
+              } else {
+                console.log(err);
+              }
             });
         });
     } else if(hashtags.includes('#alchemymoment')) {
@@ -55,8 +59,9 @@ function onAuthenticated(err, res) {
               .post('direct_messages/events/new', { event: { type: 'message_create', message_create: { target: { recipient_id: userId }, message_data: { text: `Hey @${fromHandle} thanks for your #AlchemyMoment, I have saved it in my collection and will retweet it as a throwback!` } } } }, function(err, data, response) {
                 if(!err) {
                   console.log('sent a DM thanking user for their #AlchemyMoment');
+                } else {
+                  console.log(err);
                 }
-                console.log(err);
               });
           });
       }
@@ -67,8 +72,9 @@ function onAuthenticated(err, res) {
           .post('statuses/update', { status: `Fellow coders, @${fromHandle} has a question: ${newText}` }, function(err, data, response) {
             if(!err) {
               console.log('retweeted a help question');
+            } else {
+              console.log(err);
             }
-            console.log(err);
           });
       }
     }
@@ -89,8 +95,9 @@ function momentThrowBack() {
         .post('statuses/retweet/:id', { id: res.body.twitter_id }, function(err, data, response) {
           if(!err) {
             console.log('posted a throw back');
+          } else {
+            console.log(err);
           }
-          console.log(err);
         });
     });
 }
