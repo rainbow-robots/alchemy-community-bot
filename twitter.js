@@ -28,9 +28,8 @@ function onAuthenticated(err, res) {
     const hashtags = event.entities.hashtags.map(object => {
       return `#${object.text.toLowerCase()}`;
     });
-    const regexForUrl = /(https?:\/\/)(\s)?(www\.)?(\s?)(\w+\.)*([\w\-\s]+\/)*([\w-]+)\/?/;
     let newText = tweetText;
-    newText = newText.replace('@alchemypdxbot', '').replace('alchemypdxbot', '').replace(regexForUrl, '');
+    newText = newText.replace('@alchemypdxbot', '').replace('alchemypdxbot', '');
 
     if(hashtags.includes('#joke')) {
       return request
@@ -52,11 +51,12 @@ function onAuthenticated(err, res) {
             twitter_id: tweetId
           })
           .then(() => {
-            console.log('moment is saved in the database');
+            console.log('#AlchemyMoment is saved in the database');
             Tweet 
-              .post('direct_messages/events/new', { event: { type: 'message_create', message_create: { target: { recipient_id: userId }, message_data: { text: 'Hello World!' } } } }, function(err, data, response) {
+              // eslint-disable-next-line no-unused-vars
+              .post('direct_messages/events/new', { event: { type: 'message_create', message_create: { target: { recipient_id: userId }, message_data: { text: `Hey @${fromHandle} thanks for your #AlchemyMoment, I have saved it in the databse and will retweet it as a throwback!` } } } }, function(err, data, response) {
                 if(!err) {
-                  console.log('sent a DM thanking user for #AlchemyMoment');
+                  console.log('sent a DM thanking user for their #AlchemyMoment');
                 }
                 console.log(err);
               });
@@ -66,9 +66,9 @@ function onAuthenticated(err, res) {
       if(!swearjar.profane(newText)) {
         Tweet
           // eslint-disable-next-line no-unused-vars
-          .post('statuses/update', { status: `Hey alchemers, @${fromHandle} needs help: ${newText}` }, function(err, data, response) {
+          .post('statuses/update', { status: `Fellow coders, @${fromHandle} has a question: ${newText}` }, function(err, data, response) {
             if(!err) {
-              console.log('retweeted help question');
+              console.log('retweeted a help question');
             }
             console.log(err);
           });
