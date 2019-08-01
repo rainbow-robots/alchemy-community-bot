@@ -12,7 +12,8 @@ describe('emoji neotrellis raspberry pi oh my tests', () => {
           _id: expect.any(String),
           emojiStory: expect.any(String),
           createdAt: expect.any(String),
-          updatedAt: expect.any(String)
+          updatedAt: expect.any(String),
+          __v: 0
         });
       });
   });
