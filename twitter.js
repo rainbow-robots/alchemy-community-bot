@@ -102,7 +102,7 @@ function momentThrowBack() {
     });
 }
 
-setInterval(momentThrowBack, 82800000);
+momentThrowBack();
 
 
 
