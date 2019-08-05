@@ -13,4 +13,8 @@ You can still get a random joke by putting *https://alchemypdxbot.herokuapp.com/
 
 ### The Tech ###
 
-AlchemyPDXBot was created with Node.js, MongoDB, Express as well as the the following npm packages: *twit* for accessing the twitter api and *swearjar* for ensuring data we were retweeting or saving in our database didn't include inappropriate or crud language.
+AlchemyPDXBot was created using:
+* Node.js
+* MongoDB
+* Express 
+* npm packages: *twit* for accessing the twitter api and *swearjar* for ensuring data we were retweeting or saving in our database didn't include inappropriate or crud language.
