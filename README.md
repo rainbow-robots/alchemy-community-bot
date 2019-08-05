@@ -18,4 +18,4 @@ AlchemyPDXBot was created using:
 * MongoDB
 * Express 
 * Jest for testing
-* npm packages: *twit* for accessing the twitter api and *swearjar* for ensuring data we were retweeting or saving in our database didn't include inappropriate or crud language.
+* npm packages: twit, swearjar, superagent, chance, bcrypt.js, cookie-parser
