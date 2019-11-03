@@ -1,5 +1,7 @@
 # AlchemyPDXBot #
 
+Link to bot! https://twitter.com/alchemypdxbot
+
 **AlchemyPDXBot** is a whimsical twitter bot created by Claire Cassidy (@lasermistress), Emily Ford (@cybruja), and Alex Ramirez de Cruz (@dev_de_cruz) for the alchemy code lab community. 
 
 * If you have a coding question just include our bot handle **@AlchemyPDXBot** and your question with **#help** and the bot will post your original question so the alchemy community can comment with answers/ideas.
